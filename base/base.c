@@ -300,8 +300,7 @@ void Close(int fd) {
         unix_error("Close error");
 }
 
-int Select(int n, fd_set *readfds, fd_set *writefds,
-           fd_set *exceptfds, struct timeval *timeout) {
+int Select(int n, fd_set *readfds, fd_set *writefds, fd_set *exceptfds, struct timeval *timeout) {
     int rc;
 
     if ((rc = select(n, readfds, writefds, exceptfds, timeout)) < 0)
@@ -568,8 +567,7 @@ struct hostent *Gethostbyaddr(const char *addr, int len, int type) {
 /************************************************
  * Wrappers for Pthreads thread control functions
  ************************************************/
-void Pthread_create(pthread_t *tidp, pthread_attr_t *attrp,
-                    void *(*routine)(void *), void *argp) {
+void Pthread_create(pthread_t *tidp, pthread_attr_t *attrp, void *(*routine)(void *), void *argp) {
     int rc;
 
     if ((rc = pthread_create(tidp, attrp, routine, argp)) != 0)
@@ -615,6 +613,15 @@ void Pthread_once(pthread_once_t *once_control, void (*init_function)()) {
 void Sem_init(sem_t *sem, int pshared, unsigned int value) {
     if (sem_init(sem, pshared, value) < 0)
         unix_error("Sem_init error");
+}
+
+sem_t *Sem_open(const char *name, int oflag, mode_t mode, unsigned int value) {
+    sem_t *psemaphore = sem_open(name, oflag, mode, value);
+
+    if (SEM_FAILED == psemaphore)
+        unix_error("Sem_open error");
+
+    return psemaphore;
 }
 
 void P(sem_t *sem) {

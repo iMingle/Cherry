@@ -22,6 +22,7 @@
 #include <stdarg.h>
 #include <unistd.h>
 #include <string.h>
+#include <time.h>
 #include <ctype.h>
 #include <setjmp.h>
 #include <signal.h>
@@ -236,6 +237,8 @@ void Pthread_once(pthread_once_t *once_control, void (*init_function)());
 
 /* POSIX semaphore wrappers */
 void Sem_init(sem_t *sem, int pshared, unsigned int value);
+
+sem_t *Sem_open(const char *name, int oflag, mode_t mode, unsigned int value);
 
 void P(sem_t *sem);
 

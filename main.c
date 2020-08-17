@@ -25,14 +25,23 @@
 #include "echoserverp.h"
 #include "echoservers.h"
 #include "echoservert.h"
+#include "badcount.h"
+#include "goodcount.h"
+#include "echoservert_pre.h"
+#include "psum.h"
 
 int main(int argc, char **argv) {
 //    readfile(argv[1], 10);
-    char *port = "8000";
+    char *port = "7000";
 //    tiny_web_server_start(port);
 //    select_server_start(port);
 //    echo_process_server_start(port);
 //    echo_select_server_start(port);
-    echo_thread_server_start(port);
+//    echo_prethreading_server_start(port);
+//    goodcount(100);
+    sum(4, 22, sum_mutex);
+    sum(4, 22, sum_array);
+    sum(4, 22, sum_local);
+
     exit(0);
 }
